@@ -38,7 +38,7 @@ function printExchangeRates(response) { // < -- needs variable named 'response'
 }
 
 function printExchangeAmount(amount, convRate) {
-  document.querySelector('#showResponse').innerText = `At the current exchange rate, ${amount} USD is: ${amount * 5} & ${amount * convRate}`;
+  document.querySelector('#showResponse').innerText = `At the current exchange rate, ${amount} USD is: ${amount * 5} & ${(Math.round((amount * convRate) * 100)/100).toFixed(2)}`;
   console.log(convRate);
 }
 
@@ -72,7 +72,7 @@ window.addEventListener("load", function () {
   document.querySelector('#amountForm').addEventListener("submit", handleFormSubmission); 
   // document.getElementById('availableCurrencies').addEventListener('change', getCurrency) <-- use to update DOM, don't use to call API as this will fire for each currency option if someone scrolls through using arrow keys.
 });
-
+window.addEventListener('load', getRates);
 
 let theResponse = {
   "result": "success",
