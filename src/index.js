@@ -30,6 +30,13 @@ function printExchangeRates(response) {
   response.supported_codes.forEach(element => {
     console.log(element[0]);
   });
+  let availableCurrencies = document.getElementById('currencySelection');
+response.supported_codes.forEach(element => {
+  let option = document.createElement('option');
+  option.innerText = element[0];
+  availableCurrencies.append(option);
+});
+
 }
 
 function printExchangeAmount(amount, convRate) {
