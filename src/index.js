@@ -1,35 +1,47 @@
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './css/styles.css';
-import Triangle from './js/triangle.js';
-import Rectangle from './js/rectangle.js';
+import CurrencyExchange from './js/currencyExchanger';
 
-function handleTriangleForm() {
-  event.preventDefault();
-  document.querySelector('#response').innerText = null;
-  const length1 = parseInt(document.querySelector('#length1').value);
-  const length2 = parseInt(document.querySelector('#length2').value);
-  const length3 = parseInt(document.querySelector('#length3').value);
-  const triangle = new Triangle(length1, length2, length3);
-  const response = triangle.checkType();
-  const pTag = document.createElement("p");
-  pTag.append(`Your result is: ${response}.`);
-  document.querySelector('#response').append(pTag);
+// Business Logic
+
+async function getExchangeRates() { // function is replaced by IIFE in hanldeFormSubmision() below.
+  const response = await CurrencyExchange.getExchangeRates()
+  if (response.result === 'success') {
+    printExchangeRates(response);
+  } else {
+    printError(response);
+  }
 }
 
-function handleRectangleForm() {
-  event.preventDefault();
-  document.querySelector('#response2').innerText = null;
-  const length1 = parseInt(document.querySelector('#rect-length1').value);
-  const length2 = parseInt(document.querySelector('#rect-length2').value);
-  const rectangle = new Rectangle(length1, length2);
-  const response = rectangle.getArea();
-  const pTag = document.createElement("p");
-  pTag.append(`The area of the rectangle is ${response}.`);
-  document.querySelector('#response2').append(pTag);
+// UI Logic
+function printExchangeRates(response) {
+  response.supported_codes.forEach(element => {
+    console.log(element[0]);
+  });
 }
 
-window.addEventListener("load", function() {
-  document.querySelector("#triangle-checker-form").addEventListener("submit", handleTriangleForm);
-  document.querySelector("#rectangle-area-form").addEventListener("submit", handleRectangleForm);
+// function printExchange(amount) {
+//   document.querySelector('#showResponse').innerText = `At the current exchange rate, ${amount} USD is: .`;
+// }
+
+function printError(error) {
+  document.querySelector('#showResponse').innerText = `There was an error accessing the exchange rate: ${error}`;
+}
+
+function getRates(event) {
+  event.preventDefault();
+  getExchangeRates();
+}
+
+function handleFormSubmission(event) {
+  event.preventDefault();
+  const amount = document.querySelector('#amount').value;
+  document.querySelector('#amount').value = null;
+  getExchangeRates(amount);
+}
+
+window.addEventListener("load", function () {
+  document.querySelector('#rates').addEventListener("submit", getRates);
+  document.querySelector('#amountForm').addEventListener("submit", handleFormSubmission);
 });
