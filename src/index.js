@@ -5,10 +5,21 @@ import CurrencyExchange from './js/currencyExchanger';
 
 // Business Logic
 
-async function getExchangeRates() { // function is replaced by IIFE in hanldeFormSubmision() below.
+async function getExchangeRates() { 
   const response = await CurrencyExchange.getExchangeRates()
   if (response.result === 'success') {
     printExchangeRates(response);
+  } else {
+    printError(response);
+  }
+}
+
+async function getExchangeAmount(amount, currency) { 
+  const response = await CurrencyExchange.getExchangeAmount()
+  if (response.result === 'success') {
+    let convRate = response.conversion_rates[currency];
+    console.log(convRate);
+    printExchangeAmount(amount, convRate);
   } else {
     printError(response);
   }
@@ -21,9 +32,11 @@ function printExchangeRates(response) {
   });
 }
 
-// function printExchange(amount) {
-//   document.querySelector('#showResponse').innerText = `At the current exchange rate, ${amount} USD is: .`;
-// }
+function printExchangeAmount(amount, convRate) {
+  document.querySelector('#showResponse').innerText = `At the current exchange rate, ${amount} USD is: ${amount * 5} & ${amount * convRate}`;
+  console.log(convRate);
+
+}
 
 function printError(error) {
   document.querySelector('#showResponse').innerText = `There was an error accessing the exchange rate: ${error}`;
@@ -34,11 +47,16 @@ function getRates(event) {
   getExchangeRates();
 }
 
+function getCurrency() {
+  return 
+}
+
 function handleFormSubmission(event) {
   event.preventDefault();
   const amount = document.querySelector('#amount').value;
+  let currency = getCurrency();
   document.querySelector('#amount').value = null;
-  getExchangeRates(amount);
+  getExchangeAmount(amount, currency);
 }
 
 window.addEventListener("load", function () {

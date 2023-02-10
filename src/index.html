@@ -1,21 +1,29 @@
 <html lang="en-US">
+
 <head>
   <title>Currency Exchanger</title>
 </head>
+
 <body>
-  <div class="container">
+  <div id="whole_page" class="container">
     <h1>Exchange USD currency</h1>
-    <p>Aachenosaurus Abelisaurus Abrosaurus Abydosaurus Acanthopholis Achillesaurus Achillobator Acristavus, Turanoceratops Metriacanthosaurus Vitakridrinda Jaxartosaurus Claosaurus Proplanicoxa, Paranthodon Pachyrhinosaurus Iuticosaurus Zanclodon Shamosaurus Antarctopelta.:</p>
-    <form id="rates">
-      <label for="rates">Click to get current rates</label>
-      <button type="submit" class="button" id="USD-exchangeAmount">submit</button>
-    </form>
-    <form id="amountForm">
-      <label for="amount">Enter an amount of USD to exchange:</label>
-      <input id="amount" type="number" name="amount">
-      <button type="submit" class="button" id="USD-exchangeAmount">submit</button>
-    </form>
-    <p id="showResponse"></p>
+    <div id="whole_page_minus_header">
+      <p>Aachenosaurus Abelisaurus Abrosaurus Abydosaurus Acanthopholis Achillesaurus Achillobator Acristavus,
+        Turanoceratops Metriacanthosaurus Vitakridrinda Jaxartosaurus Claosaurus Proplanicoxa, Paranthodon
+        Pachyrhinosaurus Iuticosaurus Zanclodon Shamosaurus Antarctopelta.:</p>
+      <form id="rates">
+        <label for="rates">Click to get current rates</label>
+        <button type="submit" class="button" id="supportedCurrencies">submit</button>
+      </form>
+      
+      <form id="amountForm">
+        <label for="amount">Enter an amount of USD to exchange:</label>
+        <input id="amount" type="number" name="amount">
+        <button type="submit" class="button" id="USD_exchangeAmount">submit</button>
+      </form>
+      <p id="showResponse"></p>
+    </div>
   </div>
 </body>
+
 </html>
