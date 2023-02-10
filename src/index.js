@@ -18,7 +18,7 @@ async function getExchangeAmount(amount, currency) {
   const response = await CurrencyExchange.getExchangeAmount()
   if (response.result === 'success') {
     let convRate = response.conversion_rates[currency];
-    printExchangeAmount(amount, convRate);
+    printExchangeAmount(amount, convRate, response);
   } else {
     printError(response);
   }
@@ -37,9 +37,9 @@ function printExchangeRates(response) { // < -- needs variable named 'response'
   });
 }
 
-function printExchangeAmount(amount, convRate) {
-  document.querySelector('#showResponse').innerText = `At the current exchange rate, ${amount} USD is: ${amount * 5} & ${(Math.round((amount * convRate) * 100)/100).toFixed(2)}`;
-  console.log(convRate);
+function printExchangeAmount(amount, convRate, response) {
+  document.querySelector('#showResponse').innerText = `At the current exchange rate, ${amount} USD is: ${(Math.round((amount * convRate) * 100)/100).toFixed(2)} ${getCurrency()}`;
+  console.log(response.status);
 }
 
 function printError(error) {
@@ -67,7 +67,7 @@ function handleFormSubmission(event) {
 }
 
 window.addEventListener("load", function () {
-  document.querySelector('#rates').addEventListener("submit", getRates); // <-- chkange to onload instead of submit once completed.
+  // document.querySelector('#rates').addEventListener("submit", getRates); // <-- chkange to onload instead of submit once completed.
 
   document.querySelector('#amountForm').addEventListener("submit", handleFormSubmission); 
   // document.getElementById('availableCurrencies').addEventListener('change', getCurrency) <-- use to update DOM, don't use to call API as this will fire for each currency option if someone scrolls through using arrow keys.
