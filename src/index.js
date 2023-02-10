@@ -16,11 +16,11 @@ async function getExchangeRates() {
 
 async function getExchangeAmount(amount, currency) {
   const response = await CurrencyExchange.getExchangeAmount()
-  if (response.result === 'success') {
-    let convRate = response.conversion_rates[currency];
-    printExchangeAmount(amount, convRate, response);
-  } else {
+  if (response instanceof Error) {
     printError(response);
+  } else {
+    let convRate = response.conversion_rates[currency];
+    printExchangeAmount(amount, convRate, response.status);
   }
 }
 
@@ -44,6 +44,8 @@ function printExchangeAmount(amount, convRate, response) {
 
 function printError(error) {
   document.querySelector('#showResponse').innerText = `There was an error accessing the exchange rate: ${error}`;
+  console.log(error.status);
+
 }
 
 function getRates(event) {  
