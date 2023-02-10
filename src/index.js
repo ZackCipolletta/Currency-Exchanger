@@ -5,7 +5,7 @@ import CurrencyExchange from './js/currencyExchanger';
 
 // Business Logic
 
-async function getExchangeRates() { 
+async function getExchangeRates() {
   const response = await CurrencyExchange.getExchangeRates()
   if (response.result === 'success') {
     printExchangeRates(response);
@@ -14,7 +14,7 @@ async function getExchangeRates() {
   }
 }
 
-async function getExchangeAmount(amount, currency) { 
+async function getExchangeAmount(amount, currency) {
   const response = await CurrencyExchange.getExchangeAmount()
   if (response.result === 'success') {
     let convRate = response.conversion_rates[currency];
@@ -31,18 +31,16 @@ function printExchangeRates(response) {
     console.log(element[0]);
   });
   let availableCurrencies = document.getElementById('currencySelection');
-response.supported_codes.forEach(element => {
-  let option = document.createElement('option');
-  option.innerText = element[0];
-  availableCurrencies.append(option);
-});
-
+  response.supported_codes.forEach(element => {
+    let option = document.createElement('option');
+    option.innerText = element[0];
+    availableCurrencies.append(option);
+  });
 }
 
 function printExchangeAmount(amount, convRate) {
   document.querySelector('#showResponse').innerText = `At the current exchange rate, ${amount} USD is: ${amount * 5} & ${amount * convRate}`;
   console.log(convRate);
-
 }
 
 function printError(error) {
@@ -55,7 +53,7 @@ function getRates(event) {
 }
 
 function getCurrency() {
-  return 
+  return
 }
 
 function handleFormSubmission(event) {
