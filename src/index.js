@@ -6,7 +6,7 @@ import CurrencyExchange from './js/currencyExchanger';
 // Business Logic
 
 async function getExchangeRates() {
-  const response = await theResponse; //await CurrencyExchange.getExchangeRates()
+  const response = await theResponse; //await CurrencyExchange.getExchangeRates() <-- gets called on page load.
   if (response.result === 'success') {
     dropDownsToPopulate(response);
   } else {
@@ -14,13 +14,13 @@ async function getExchangeRates() {
   }
 }
 
-async function getExchangeAmount(amount, currency) {
-  const response = await CurrencyExchange.getExchangeAmount();
+async function getExchangeAmount(amount, currencyFrom, currencyTo) {
+  const response = await CurrencyExchange.getExchangeAmount(currencyFrom, currencyTo);
   if (response instanceof Error) {
     printError(response);
   } else {
-    let convRate = response.conversion_rates[currency];
-    printExchangeAmount(amount, convRate, currency);
+    let convRate = response.conversion_rate;
+    printExchangeAmount(amount, convRate, currencyFrom, currencyTo);
   }
 }
 
@@ -34,14 +34,14 @@ function getCurrencyCodes(response, dropDown) {
 }
 
 function dropDownsToPopulate(response) {
-  let availableFromCurrencies = document.getElementById('currencyFromSelection');
-  let availableToCurrencies = document.getElementById('currencyToSelection');
+  let availableFromCurrencies = document.getElementById('currency0Selection');
+  let availableToCurrencies = document.getElementById('currency1Selection');
   getCurrencyCodes(response, availableFromCurrencies);
   getCurrencyCodes(response, availableToCurrencies);
 }
 
-function printExchangeAmount(amount, convRate, currency) {
-  document.querySelector('#showResponse').innerText = `At the current exchange rate, ${amount} USD is: ${(Math.round((amount * convRate) * 100) / 100).toFixed(2)} ${currency}`;
+function printExchangeAmount(amount, convRate, currencyFrom, currencyTo) {
+  document.querySelector('#showResponse').innerText = `At the current exchange rate, ${amount} ${currencyFrom} is: ${(Math.round((amount * convRate) * 100) / 100).toFixed(2)} ${currencyTo}`;
 }
 
 function printError(error) {
@@ -54,17 +54,20 @@ function getRates(event) {
   getExchangeRates();
 }
 
-function getCurrency() {
-  let currency = document.getElementById('currencyFromSelection').value;
+function getCurrency(selection) {
+  let currency = document.getElementById(`currency${selection}Selection`).value;
   return currency;
 }
 
 function handleFormSubmission(event) {
   event.preventDefault();
   const amount = document.querySelector('#amount').value;
-  let currency = getCurrency();
+  let currencyFrom = getCurrency(0); // being a bit cheeky here by using 0 and 1 in place as arguments instaed of strings as they should be.  This allows me to bypass having to create a seperate function to perform the exact same action on two different DOM elements.  I coul dnot find another workaround.
+  let currencyTo = getCurrency(1);
   document.querySelector('#amount').value = null;
-  getExchangeAmount(amount, currency);
+  console.log(currencyFrom);
+  console.log(currencyTo);
+  getExchangeAmount(amount, currencyFrom, currencyTo);
 }
 
 window.addEventListener("load", function () {
