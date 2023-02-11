@@ -9,16 +9,17 @@ async function getSupportedCurrencies() {
   if (sessionStorage.getItem('supportedCurrencies')) {
     const response = JSON.parse(sessionStorage.getItem('supportedCurrencies'));
     dropDownsToPopulate(response);
-    document.getElementById('showResponse').innerText ="this is coming from cache";
-  }
-
-  const response = await CurrencyExchange.getSupportedCurrencies() 
-  if (response.result === 'success') {
-    sessionStorage.setItem('supportedCurrencies', JSON.stringify(response));
-    dropDownsToPopulate(response);
-    document.getElementById('showResponse').innerText ="this is not coming from cache damnit";
+    document.getElementById('showResponse').innerText = "this is coming from cache";
   } else {
-    printError(response);
+    const response = await CurrencyExchange.getSupportedCurrencies()
+    if (response.result === 'success') {
+      sessionStorage.setItem('supportedCurrencies', JSON.stringify(response));
+      dropDownsToPopulate(response);
+      document.getElementById('showResponse').innerText = "this is not coming from cache damnit";
+
+    } else {
+      printError(response);
+    }
   }
 }
 
@@ -38,7 +39,7 @@ function getCurrencyCodes(response, dropDown) {
   response.supported_codes.forEach(element => {
     let option = document.createElement('option');
     option.innerText = element[0];
-    dropDown.append(option); 
+    dropDown.append(option);
   });
 }
 
