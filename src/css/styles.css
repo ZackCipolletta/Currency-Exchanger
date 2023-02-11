@@ -1,9 +1,70 @@
 body {
-    background-color: #1F51FF;
-    color: white;
-    font-weight: bolder;
-  }
+  background-image: url('../assets/currency_background.jpg' ) ;
+  background-color: black;
+  color: white;
+  font-weight: bolder;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+}
+
+#whole_page_minus_header {
+  background-color: #0000008b;
+}
 
 #amount {
   width: 75px;
+}
+
+h1 {
+  text-align: center;
+  padding: 25px;
+  background-color: #0000008b;
+}
+
+.container {
+
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+form {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 40px;
+}
+
+table {
+
+  width: 100%;
+  margin-top: 40px;
+}
+
+tr {
+  font-weight: bolder;
+}
+
+th,
+td {
+
+  padding: 10px;
+  text-align: center;
+}
+
+th {
+  font-weight: bolder;
+  background-color: #fff;
+  color: #333;
+}
+
+td {
+  background-color: #2a2a2ad5;
 }

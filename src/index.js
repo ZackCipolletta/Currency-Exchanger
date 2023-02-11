@@ -83,7 +83,7 @@ function handleFormSubmission(event) {
 }
 
 window.addEventListener("load", function () {
-  // document.querySelector('#rates').addEventListener("submit", getRates); // <-- chkange to onload instead of submit once completed.
+  // document.querySelector('#rates').addEventListener("submit", getRates); // <-- change to onload instead of submit once completed.
 
   document.querySelector('#amountForm').addEventListener("submit", handleFormSubmission);
   // document.getElementById('availableCurrencies').addEventListener('change', getCurrency) <-- use to update DOM, don't use to call API as this will fire for each currency option if someone scrolls through using arrow keys.
