@@ -54,6 +54,11 @@ function getRates(event) {
   getExchangeRates();
 }
 
+function updateConvMessage() {
+  document.getElementById('currencyFrom').innerText = `of ${getCurrency(0)}`;
+}
+
+
 function getCurrency(selection) {
   let currency = document.getElementById(`currency${selection}Selection`).value;
   return currency;
@@ -65,8 +70,6 @@ function handleFormSubmission(event) {
   let currencyFrom = getCurrency(0); // being a bit cheeky here by using 0 and 1 in place as arguments instaed of strings as they should be.  This allows me to bypass having to create a seperate function to perform the exact same action on two different DOM elements.  I coul dnot find another workaround.
   let currencyTo = getCurrency(1);
   document.querySelector('#amount').value = null;
-  console.log(currencyFrom);
-  console.log(currencyTo);
   getExchangeAmount(amount, currencyFrom, currencyTo);
 }
 
@@ -75,6 +78,8 @@ window.addEventListener("load", function () {
 
   document.querySelector('#amountForm').addEventListener("submit", handleFormSubmission);
   // document.getElementById('availableCurrencies').addEventListener('change', getCurrency) <-- use to update DOM, don't use to call API as this will fire for each currency option if someone scrolls through using arrow keys.
+  document.getElementById('currency0Selection').addEventListener('change', updateConvMessage);
+
 });
 window.addEventListener('load', getRates);
 

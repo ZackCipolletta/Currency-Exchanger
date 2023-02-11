@@ -21,8 +21,7 @@ export default class CurrencyExchange {
       if (!response.ok) {
         let errorMessage = `${response.status}. Reason:${response.statusText} ${jsonifiedResponse['error-type']}.`;
         if (jsonifiedResponse['extra-info']) {
-          console.log('this branch is firing')
-          errorMessage = errorMessage.concat(` ${jsonifiedResponse['extra-info']}`)
+          errorMessage = errorMessage.concat(` ${jsonifiedResponse['extra-info']}`);
         }
         throw new Error(errorMessage);
       }
