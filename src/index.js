@@ -11,7 +11,7 @@ async function getSupportedCurrencies() {
     dropDownsToPopulate(response);
     document.getElementById('showResponse').innerText = "this is coming from cache";
   } else {
-    const response = await CurrencyExchange.getSupportedCurrencies()
+    const response = await CurrencyExchange.getSupportedCurrencies();
     if (response.result === 'success') {
       sessionStorage.setItem('supportedCurrencies', JSON.stringify(response));
       dropDownsToPopulate(response);
@@ -23,7 +23,6 @@ async function getSupportedCurrencies() {
   }
 }
 
-
 async function getExchangeAmount(amount, currencyFrom, currencyTo) {
   const response = await CurrencyExchange.getExchangeAmount(currencyFrom, currencyTo, amount);
   if (response instanceof Error) {
@@ -31,6 +30,23 @@ async function getExchangeAmount(amount, currencyFrom, currencyTo) {
   } else {
     let convertedResult = response.conversion_result;
     printExchangeAmount(amount, currencyFrom, convertedResult, currencyTo);
+  }
+}
+
+async function latestExchangeValue() {
+  if (sessionStorage.getItem('latestExchangeValues')) {
+    const response = JSON.parse(sessionStorage.getItem('latestExchangeValues'));
+    currentValuesTable(response);
+    document.getElementById('showResponse').innerText = "latest values is coming from cache";
+  } else {
+    const response = await CurrencyExchange.latestExchangeValue();
+    if (response.result === 'success') {
+      sessionStorage.setItem('latestExchangeValues', JSON.stringify(response));
+      currentValuesTable(response);
+      document.getElementById('showResponse').innerText = "latest values is not coming from cache damnit";
+    } else {
+      printError(response);
+    }
   }
 }
 
@@ -51,7 +67,7 @@ function dropDownsToPopulate(response) {
 }
 
 function printExchangeAmount(amount, currencyFrom, convertedResult, currencyTo) {
-  document.querySelector('#showResponse').innerText = `At the current exchange rate, ${amount} ${currencyFrom} is: ${convertedResult} ${currencyTo}`;
+  document.querySelector('#showResponse').innerText = `At the current exchange rate, ${amount} ${currencyFrom} is: ${(Math.round((convertedResult*100)*100)/100).toFixed(2)} ${currencyTo}`;
 }
 
 function printError(error) {
@@ -59,7 +75,21 @@ function printError(error) {
   console.log(error.status);
 }
 
-function getRates(event) {
+function currentValuesTable(response) {
+  let latestRatesArr = ['EUR', 'GBP', 'JPY'];
+  latestRatesArr.forEach(element => {
+    document.querySelector(`#${element}`).innerText = `${response.conversion_rates[`${element}`]}`;
+    convertedAmountFill(element);
+  });
+}
+
+function convertedAmountFill(currency) {
+  console.log(currency);
+  let convRate = document.querySelector(`#${currency}`).innerText;
+  document.querySelector(`#${currency}x100`).innerText = (Math.round((convRate*100)*100)/100).toFixed(2);
+}
+
+function getCurrencies(event) {
   event.preventDefault();
   getSupportedCurrencies();
 }
@@ -86,8 +116,9 @@ window.addEventListener("load", function () {
   // document.querySelector('#rates').addEventListener("submit", getRates); // <-- change to onload instead of submit once completed.
 
   document.querySelector('#amountForm').addEventListener("submit", handleFormSubmission);
-  // document.getElementById('availableCurrencies').addEventListener('change', getCurrency) <-- use to update DOM, don't use to call API as this will fire for each currency option if someone scrolls through using arrow keys.
+
   document.getElementById('currency0Selection').addEventListener('change', updateConvMessage);
 
 });
-window.addEventListener('load', getRates);
+window.addEventListener('load', getCurrencies);
+window.addEventListener('load', latestExchangeValue);
