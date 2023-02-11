@@ -15,12 +15,12 @@ async function getExchangeRates() {
 }
 
 async function getExchangeAmount(amount, currencyFrom, currencyTo) {
-  const response = await CurrencyExchange.getExchangeAmount(currencyFrom, currencyTo);
+  const response = await CurrencyExchange.getExchangeAmount(currencyFrom, currencyTo, amount);
   if (response instanceof Error) {
     printError(response);
   } else {
-    let convRate = response.conversion_rate;
-    printExchangeAmount(amount, convRate, currencyFrom, currencyTo);
+    let convertedResult = response.conversion_result;
+    printExchangeAmount(amount, currencyFrom, convertedResult, currencyTo);
   }
 }
 
@@ -40,8 +40,8 @@ function dropDownsToPopulate(response) {
   getCurrencyCodes(response, availableToCurrencies);
 }
 
-function printExchangeAmount(amount, convRate, currencyFrom, currencyTo) {
-  document.querySelector('#showResponse').innerText = `At the current exchange rate, ${amount} ${currencyFrom} is: ${(Math.round((amount * convRate) * 100) / 100).toFixed(2)} ${currencyTo}`;
+function printExchangeAmount(amount, currencyFrom, convertedResult, currencyTo) {
+  document.querySelector('#showResponse').innerText = `At the current exchange rate, ${amount} ${currencyFrom} is: ${convertedResult} ${currencyTo}`;
 }
 
 function printError(error) {
