@@ -14,9 +14,9 @@ export default class CurrencyExchange {
       return error;
     }
   }
-  static async getExchangeAmount() {
+  static async getExchangeAmount(convertFrom, convertTo) {
     try {
-      const response = await fetch(`https://v6.exchangerate-api.com/v6/e15c41ceb3769636ce569121/latest/USD`);
+      const response = await fetch(`https://v6.exchangerate-api.com/v6/${process.env.API_KEY}/pair/${convertFrom}/${convertTo}`);
       const jsonifiedResponse = await response.json();
       if (!response.ok) {
         let errorMessage = `${response.status}. Reason:${response.statusText} ${jsonifiedResponse['error-type']}.`;

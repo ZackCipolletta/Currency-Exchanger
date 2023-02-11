@@ -1,4 +1,5 @@
 <html lang="en-US">
+
 <head>
   <title>Currency Exchanger</title>
 </head>
@@ -15,11 +16,17 @@
         <button type="submit" class="button" id="supportedCurrencies">submit</button>
       </form> -->
 
-      <form id="availableCurrencies">
+      <form id="availableFromCurrencies">
         <label for="currencySelection">Please select the currency you would like to exchange FROM:</label>
         <select name="currency" id="currencyFromSelection">
           <option>--select--</option>
+        </select>
+      </form>
 
+      <form id="availableToCurrencies">
+        <label for="currencySelection">Please select the currency you would like to exchange TO:</label>
+        <select name="currency" id="currencyToSelection">
+          <option>--select--</option>
         </select>
       </form>
 
@@ -32,4 +39,5 @@
     </div>
   </div>
 </body>
+
 </html>

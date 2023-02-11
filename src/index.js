@@ -8,7 +8,7 @@ import CurrencyExchange from './js/currencyExchanger';
 async function getExchangeRates() {
   const response = await theResponse; //await CurrencyExchange.getExchangeRates()
   if (response.result === 'success') {
-    printExchangeRates(response);
+    dropDownsToPopulate(response);
   } else {
     printError(response);
   }
@@ -25,13 +25,19 @@ async function getExchangeAmount(amount, currency) {
 }
 
 // UI Logic
-function printExchangeRates(response) { // < -- needs variable named 'response'
-  let availableCurrencies = document.getElementById('currencyFromSelection');
+function getCurrencyCodes(response, dropDown) {
   response.supported_codes.forEach(element => {
     let option = document.createElement('option');
     option.innerText = element[0];
-    availableCurrencies.append(option);
+    dropDown.append(option); 
   });
+}
+
+function dropDownsToPopulate(response) {
+  let availableFromCurrencies = document.getElementById('currencyFromSelection');
+  let availableToCurrencies = document.getElementById('currencyToSelection');
+  getCurrencyCodes(response, availableFromCurrencies);
+  getCurrencyCodes(response, availableToCurrencies);
 }
 
 function printExchangeAmount(amount, convRate, currency) {
