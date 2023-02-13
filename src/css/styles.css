@@ -3,13 +3,14 @@ body {
   background-color: black;
   color: white;
   font-weight: bolder;
+  font-size: larger;
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;
 }
 
 #whole_page_minus_header {
-  background-color: #0000008b;
+  background-color: #000000ad;
 }
 
 #amount {

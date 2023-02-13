@@ -9,7 +9,6 @@ async function getSupportedCurrencies() {
   if (sessionStorage.getItem('supportedCurrencies')) {
     const response = JSON.parse(sessionStorage.getItem('supportedCurrencies'));
     dropDownsToPopulate(response);
-    document.getElementById('showResponse').innerText = "this is coming from cache";
   } else {
     const response = await CurrencyExchange.getSupportedCurrencies();
     if (response.result === 'success') {
@@ -67,12 +66,11 @@ function dropDownsToPopulate(response) {
 }
 
 function printExchangeAmount(amount, currencyFrom, convertedResult, currencyTo) {
-  document.querySelector('#showResponse').innerText = `At the current exchange rate, ${amount} ${currencyFrom} is: ${(Math.round((convertedResult*100)*100)/100).toFixed(2)} ${currencyTo}`;
+  document.querySelector('#showResponse').innerText = `At the current exchange rate, ${amount} ${currencyFrom} is: ${(Math.round(convertedResult*100)/100).toFixed(2)} ${currencyTo}`;
 }
 
 function printError(error) {
   document.querySelector('#showResponse').innerText = `There was an error accessing the exchange rate: ${error}`;
-  console.log(error.status);
 }
 
 function currentValuesTable(response) {
@@ -84,7 +82,6 @@ function currentValuesTable(response) {
 }
 
 function convertedAmountFill(currency) {
-  console.log(currency);
   let convRate = document.querySelector(`#${currency}`).innerText;
   document.querySelector(`#${currency}x100`).innerText = (Math.round((convRate*100)*100)/100).toFixed(2);
 }
