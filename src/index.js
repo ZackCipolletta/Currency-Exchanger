@@ -110,10 +110,7 @@ function handleFormSubmission(event) {
 }
 
 window.addEventListener("load", function () {
-  // document.querySelector('#rates').addEventListener("submit", getRates); // <-- change to onload instead of submit once completed.
-
   document.querySelector('#amountForm').addEventListener("submit", handleFormSubmission);
-
   document.getElementById('currency0Selection').addEventListener('change', updateConvMessage);
 
 });
