@@ -103,7 +103,7 @@ function getCurrency(selection) {
 function handleFormSubmission(event) {
   event.preventDefault();
   const amount = document.querySelector('#amount').value;
-  let currencyFrom = getCurrency(0); // being a bit cheeky here by using 0 and 1 in place as arguments instaed of strings as they should be.  This allows me to bypass having to create a seperate function to perform the exact same action on two different DOM elements.  I coul dnot find another workaround.
+  let currencyFrom = getCurrency(0); // being a bit cheeky here by using 0 and 1 in place as arguments instead of strings as they should be.  This allows me to bypass having to create a separate function to perform the exact same action on two different DOM elements.  I could not find another workaround.
   let currencyTo = getCurrency(1);
   document.querySelector('#amount').value = null;
   getExchangeAmount(amount, currencyFrom, currencyTo);
