@@ -14,7 +14,7 @@ async function getSupportedCurrencies() {
     if (response.result === 'success') {
       sessionStorage.setItem('supportedCurrencies', JSON.stringify(response));
       dropDownsToPopulate(response);
-      document.getElementById('showResponse').innerText = "this is not coming from cache damnit";
+      // document.getElementById('showResponse').innerText = "this is not coming from cache damnit";
 
     } else {
       printError(response);
@@ -42,7 +42,7 @@ async function latestExchangeValue() {
     if (response.result === 'success') {
       sessionStorage.setItem('latestExchangeValues', JSON.stringify(response));
       currentValuesTable(response);
-      document.getElementById('showResponse').innerText = "latest values is not coming from cache damnit";
+      // document.getElementById('showResponse').innerText = "latest values is not coming from cache damnit";
     } else {
       printError(response);
     }
